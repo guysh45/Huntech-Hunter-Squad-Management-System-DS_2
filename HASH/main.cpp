@@ -1,42 +1,97 @@
 #include <iostream>
 #include "Hash.h"
+#include <string>
 
 using namespace std;
 
 int main() {
     Hash<int> hash;
-    cout << hash.getSize() <<endl;
-    hash.insert(1,1);
-    cout << hash.getSize() <<endl;
-    hash.insert(2,2);
-    cout << hash.getSize() <<endl;
-    hash.insert(3,3);
-    cout << hash.getSize() <<endl;
-    hash.insert(4,4);
-    cout << hash.getSize() <<endl;
-    hash.insert(5,5);
-    cout << hash.getSize() <<endl;
-    hash.insert(6,6);
-    cout << hash.getSize() <<endl;
-    hash.insert(7,7);
-    cout << hash.getSize() <<endl;
-    hash.insert(8,8);
-    cout << hash.getSize() <<endl;
-    hash.insert(9,9);
-    cout << hash.getSize() <<endl;
-    hash.insert(10,10);
-    cout << hash.getSize() <<endl;
-    hash.insert(11,11);
-    cout << hash.getSize() <<endl;
-    hash.insert(12,12);
-    cout << hash.getSize() <<endl;
-    hash.insert(13,13);
-    cout << hash.getSize() <<endl;
-    hash.insert(14,14);
-    cout << hash.getSize() <<endl;
-    hash.insert(15,15);
-    cout << hash.getSize() <<endl;
-    hash.insert(15,15);
+    cout << hash.getSize() << endl;
+    hash.insert(1, 1);
+    cout << hash.getSize() << endl;
+    hash.insert(2, 2);
+    cout << hash.getSize() << endl;
+    hash.insert(3, 3);
+    cout << hash.getSize() << endl;
+    hash.insert(4, 4);
+    cout << hash.getSize() << endl;
+    hash.insert(5, 5);
+    cout << hash.getSize() << endl;
+    hash.insert(6, 6);
+    cout << hash.getSize() << endl;
+    hash.insert(7, 7);
+    cout << hash.getSize() << endl;
+    hash.insert(8, 8);
+    cout << hash.getSize() << endl;
+    hash.insert(9, 9);
+    cout << hash.getSize() << endl;
+    hash.insert(10, 10);
+    cout << hash.getSize() << endl;
+    hash.insert(11, 11);
+    cout << hash.getSize() << endl;
+    hash.insert(12, 12);
+    cout << hash.getSize() << endl;
+    hash.insert(13, 13);
+    cout << hash.getSize() << endl;
+    hash.insert(14, 14);
+    cout << hash.getSize() << endl;
+    hash.insert(15, 15);
+    cout << hash.getSize() << endl;
+
+    cout << "trying to insert the same item again :: ";
+    bool secssus = hash.insert(15, 15);
+    cout << secssus << endl;
+
+    cout << "trying to insert somthing else :: ";
+    secssus = hash.insert(16, 16);
+    cout << secssus << endl;
+
+
+    int* ptr;
+    for(int id = 0; id < 20; id++) {
+        cout << "item with id: " << id << " is of value: ";
+        ptr = hash.find(id);
+        if(ptr == nullptr) {
+            cout <<"NOT FOUND" <<endl;
+        } else {
+            cout << *ptr <<endl;
+        }
+    }
+
+
+    Hash<std::string> myHash;
+
+    // 1. Test Insert
+    std::cout << "Inserting 101... " << (myHash.insert(101, "Alpha") ? "Success" : "Failed") << std::endl;
+    std::cout << "Inserting 202... " << (myHash.insert(202, "Beta") ? "Success" : "Failed") << std::endl;
+
+    // 2. Test Duplicate Insert (Should fail)
+    std::cout << "Inserting 101 again... " << (myHash.insert(101, "Gamma") ? "Success" : "Failed (Correct)") << std::endl;
+
+    // 3. Test Find (Success)
+    std::string* val = myHash.find(101);
+    if (val) {
+        std::cout << "Found 101: " << *val << std::endl;
+        *val = "AlphaUpdated"; // Test modification
+        std::cout << "Updated 101 to: " << *myHash.find(101) << std::endl;
+    } else {
+        std::cout << "101 Not Found (Error)" << std::endl;
+    }
+
+    // 4. Test Find (Failure)
+    if (myHash.find(999) == nullptr) {
+        std::cout << "999 Not Found (Correct)" << std::endl;
+    }
+
+    // 5. Test Expansion (Force a rehash)
+    std::cout << "Forcing expansion..." << std::endl;
+    for(int i = 0; i < 20; i++) {
+        myHash.insert(i, "Data" + std::to_string(i));
+    }
+    std::cout << "New Size: " << myHash.getSize() << " (Should be > 8)" << std::endl;
 
     return 0;
 }
+
+
+
