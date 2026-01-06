@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <stdexcept>
 
 #include "Node.h"
 
@@ -92,13 +93,6 @@ class AvlRankTree {
     std::shared_ptr<T> findHelper(const T &data, Node<T> *&current);
 
 
-     /**
-     *@brief finds a node by its rank.
-     * @param i - the rank looked for
-     * @return If found shared_ptr to the requested data. else nullptr.
-     */
-    std::shared_ptr<T> find_rank(int i);
-
 public:
     AvlRankTree(): root(nullptr) {
     }
@@ -138,7 +132,15 @@ public:
     std::shared_ptr<T> find(const T &data) {
         return findHelper(data, root);
     }
+
+    /**
+    *@brief finds a node by its rank.
+    * @param i - the rank looked for
+    * @return If found shared_ptr to the requested data. else nullptr.
+    */
+    std::shared_ptr<T> findRank(int i);
 };
+
 
 
 template<class T>
@@ -329,7 +331,7 @@ std::shared_ptr<T> AvlRankTree<T>::findHelper(const T &data, Node<T> *&current) 
 }
 
 template<class T>
-std::shared_ptr<T> AvlRankTree<T>::find_rank(int i) {
+std::shared_ptr<T> AvlRankTree<T>::findRank(int i) {
     if (i <= 0 || i > elementsCounter) {
         return nullptr;
     }
@@ -344,13 +346,12 @@ std::shared_ptr<T> AvlRankTree<T>::find_rank(int i) {
 
         if (sizeLeft == i) return current->data;    //found a node that has the right amount of left childrens.
 
-        if (sizeLeft > i) {  //if left suv tree had more then i - 1 nodes. the node we are looking for is in the left size
+        if (sizeLeft > i) {  //if left sub tree had more then i - 1 nodes. the node we are looking for is in the left size
             current = current->left;
         }else if (current->right != nullptr) { // if left sub tree doesnt have enough nodes, the one we are looking for is in the rights size
             current = current->right;
             i -= sizeLeft;
-        }else {
-            return nullptr;
         }
     }
+    return nullptr;
 }
