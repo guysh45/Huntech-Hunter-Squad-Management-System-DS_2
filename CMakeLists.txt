@@ -9,4 +9,6 @@ add_executable(DS_2
         Huntech26a2.cpp
         Huntech26a2.h
         Hunter.h
+        AvlRankTree.h
+        Node.h
 )
