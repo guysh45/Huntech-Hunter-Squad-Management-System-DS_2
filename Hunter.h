@@ -29,11 +29,9 @@ public:
     hunter(hunter &&) = delete;
     hunter &operator=(hunter &&) = delete;
 
-    bool operator==(const hunter &other) const {return (this->hunterId == other.hunterId);};
-
-    int get_hunterId() const {return this->hunterId;};
-    int get_fightsHad() const {return this->fightsHad;};
-    int get_joinedGroupFights() const {return this->joinedGroupFights;};
-    int get_aura() const {return this->aura;};
+    int getHunterId() const {return this->hunterId;};
+    int getFightsHad() const {return this->fightsHad;};
+    int getJoinedGroupFights() const {return this->joinedGroupFights;};
+    int getAura() const {return this->aura;};
     const NenAbility& getNenAbility() const {return this->Nen;};
 };
