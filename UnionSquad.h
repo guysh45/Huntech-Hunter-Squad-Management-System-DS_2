@@ -4,14 +4,17 @@
 #include "wet2util.h"
 #include "stdexcept"
 
+class UnionNode;
+
 class UnionSquad {
     static const int INITIAL_SIZE = 0;
     static const int INITIAL_EXP = 0;
 
+public:
     int squadId;
     int size = INITIAL_SIZE;
     int squadExp = INITIAL_EXP;
-    UnionNode* groupRoot;
+    UnionNode* groupRoot = nullptr;
     NenAbility squadNen;
 
     friend class Union;

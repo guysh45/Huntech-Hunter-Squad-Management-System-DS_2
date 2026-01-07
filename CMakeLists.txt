@@ -4,7 +4,7 @@ project(DS_2)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(DS_2
-        main26a2.cpp
+#        main26a2.cpp
         wet2util.h
         Huntech26a2.cpp
         Huntech26a2.h
@@ -14,4 +14,6 @@ add_executable(DS_2
         UnionNode.h
         Union.h
         UnionSquad.h
+        Union.cpp
+        main.cpp
 )

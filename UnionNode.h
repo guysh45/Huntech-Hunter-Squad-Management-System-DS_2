@@ -3,13 +3,14 @@
 #include "wet2util.h"
 #include "Hunter.h"
 #include "AvlNode.h"
+#include "UnionSquad.h"
 
 class UnionNode {
 
     UnionNode *parent = nullptr;
 
     Hunter hunter;
-    AvlNode<Squad>* squad = nullptr;
+    AvlNode<UnionSquad>* squad = nullptr;
 
     friend class Union;
 
