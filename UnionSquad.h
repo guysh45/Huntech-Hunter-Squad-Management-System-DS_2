@@ -30,4 +30,7 @@ public:
     UnionSquad& operator=(const UnionSquad&) = delete;
     UnionSquad(UnionSquad &&) = delete;
     UnionSquad &operator=(UnionSquad &&) = delete;
+
+    bool operator>(const UnionSquad &other) const {return squadId > other.squadId;}
+
 };
