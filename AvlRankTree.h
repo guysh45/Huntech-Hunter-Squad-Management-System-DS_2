@@ -2,7 +2,7 @@
 #include <memory>
 #include <stdexcept>
 
-#include "Node.h"
+#include "AvlNode.h"
 
 
 /**
@@ -22,7 +22,7 @@ class AvlRankTree {
     static const int BFM2 = -2;
 
 
-    Node<T> *root;
+    AvlNode<T> *root;
     int elementsCounter = BASE_COUNTER;
 
     /**
@@ -30,58 +30,58 @@ class AvlRankTree {
      * @param inData - The provided data to be inserted (by shared_ptr).
      * @param insertionPoint the node to try to insert to.
      */
-    void insertionHelper(std::shared_ptr<T> inData, Node<T> *&insertionPoint);
+    void insertionHelper(std::shared_ptr<T> inData, AvlNode<T> *&insertionPoint);
 
 
     /**
      * @brief Determent the appropriate roll and preforms it.
      * @param problematicNode The unbalanced Node.
      */
-    static void rollSelector(Node<T> *&problematicNode);
+    static void rollSelector(AvlNode<T> *&problematicNode);
 
     /**
      * @brief Preforms an LL roll.
      * @param problematicNode - the unbalanced node.
      */
-    static void LLRoll(Node<T> *&problematicNode);
+    static void LLRoll(AvlNode<T> *&problematicNode);
 
     /**
      * @brief Preforms an RR roll.
      * @param problematicNode - the unbalanced node.
      */
-    static void RRRoll(Node<T> *&problematicNode);
+    static void RRRoll(AvlNode<T> *&problematicNode);
 
     /**
      * @brief Preforms an LR roll.
      * @param problematicNode - the unbalanced node.
      */
-    static void LRRoll(Node<T> *&problematicNode);
+    static void LRRoll(AvlNode<T> *&problematicNode);
 
     /**
      * @brief Preforms an RL roll.
      * @param problematicNode - the unbalanced node.
      */
-    static void RLRoll(Node<T> *&problematicNode);
+    static void RLRoll(AvlNode<T> *&problematicNode);
 
 
     /**
     * @brief - called by destructor and goes on a killing spree of nodes.
     */
-    void destructorPostOrder(Node<T> *root);
+    void destructorPostOrder(AvlNode<T> *root);
 
 
     /**
      * @brief A recursive helper function for remove.
      * @param outData - the requested data to be removed.
      */
-    void removeHelper(const T &outData, Node<T> *&current);
+    void removeHelper(const T &outData, AvlNode<T> *&current);
 
     /**
      *
      * @param current - The node to find the minimum node in its subtree.
      * @return the minimum Node in the subtree.
      */
-    Node<T> *findMin(Node<T> *current);
+    AvlNode<T> *findMin(AvlNode<T> *current);
 
     /**
      *@brief A recursive helper function for find.
@@ -90,7 +90,7 @@ class AvlRankTree {
      * @param current The current looked upon node.
      * @return If found shared_ptr to the requested data. else nullptr.
      */
-    std::shared_ptr<T> findHelper(const T &data, Node<T> *&current);
+    std::shared_ptr<T> findHelper(const T &data, AvlNode<T> *&current);
 
 
 public:
@@ -144,16 +144,16 @@ public:
 
 
 template<class T>
-void AvlRankTree<T>::insertionHelper(std::shared_ptr<T> inData, Node<T> *&insertionPoint) {
+void AvlRankTree<T>::insertionHelper(std::shared_ptr<T> inData, AvlNode<T> *&insertionPoint) {
     if (*(insertionPoint->data) > *inData) {
         if (insertionPoint->left == nullptr) {
-            insertionPoint->left = new Node<T>(inData);
+            insertionPoint->left = new AvlNode<T>(inData);
         } else {
             insertionHelper(inData, insertionPoint->left);
         }
     } else if (*inData > *(insertionPoint->data)) {
         if (insertionPoint->right == nullptr) {
-            insertionPoint->right = new Node<T>(inData);
+            insertionPoint->right = new AvlNode<T>(inData);
         } else {
             insertionHelper(inData, insertionPoint->right);
         }
@@ -170,7 +170,7 @@ void AvlRankTree<T>::insertionHelper(std::shared_ptr<T> inData, Node<T> *&insert
 
 
 template<class T>
-void AvlRankTree<T>::rollSelector(Node<T> *&problematicNode) {
+void AvlRankTree<T>::rollSelector(AvlNode<T> *&problematicNode) {
     if (problematicNode->balanceFactor == BF2) {
         if (problematicNode->left->balanceFactor >= BF0) {
             LLRoll(problematicNode);
@@ -188,10 +188,10 @@ void AvlRankTree<T>::rollSelector(Node<T> *&problematicNode) {
 
 
 template<class T>
-void AvlRankTree<T>::LLRoll(Node<T> *&problematicNode) {
-    Node<T> *newRoot = problematicNode->left;
-    Node<T> *oldRoot = problematicNode;
-    Node<T> *T2 = newRoot->right;
+void AvlRankTree<T>::LLRoll(AvlNode<T> *&problematicNode) {
+    AvlNode<T> *newRoot = problematicNode->left;
+    AvlNode<T> *oldRoot = problematicNode;
+    AvlNode<T> *T2 = newRoot->right;
 
     problematicNode = newRoot;
 
@@ -204,10 +204,10 @@ void AvlRankTree<T>::LLRoll(Node<T> *&problematicNode) {
 
 
 template<class T>
-void AvlRankTree<T>::RRRoll(Node<T> *&problematicNode) {
-    Node<T> *newRoot = problematicNode->right;
-    Node<T> *oldRoot = problematicNode;
-    Node<T> *T2 = newRoot->left;
+void AvlRankTree<T>::RRRoll(AvlNode<T> *&problematicNode) {
+    AvlNode<T> *newRoot = problematicNode->right;
+    AvlNode<T> *oldRoot = problematicNode;
+    AvlNode<T> *T2 = newRoot->left;
 
     problematicNode = newRoot;
 
@@ -220,7 +220,7 @@ void AvlRankTree<T>::RRRoll(Node<T> *&problematicNode) {
 
 
 template<class T>
-void AvlRankTree<T>::LRRoll(Node<T> *&problematicNode) {
+void AvlRankTree<T>::LRRoll(AvlNode<T> *&problematicNode) {
     if (problematicNode == nullptr || problematicNode->left == nullptr) return;
     RRRoll(problematicNode->left);
     LLRoll(problematicNode);
@@ -228,7 +228,7 @@ void AvlRankTree<T>::LRRoll(Node<T> *&problematicNode) {
 
 
 template<class T>
-void AvlRankTree<T>::RLRoll(Node<T> *&problematicNode) {
+void AvlRankTree<T>::RLRoll(AvlNode<T> *&problematicNode) {
     if (problematicNode == nullptr || problematicNode->right == nullptr) return;
     LLRoll(problematicNode->right);
     RRRoll(problematicNode);
@@ -238,7 +238,7 @@ void AvlRankTree<T>::RLRoll(Node<T> *&problematicNode) {
 template<class T>
 void AvlRankTree<T>::insert(std::shared_ptr<T> inData) {
     if (root == nullptr) {
-        root = new Node<T>(inData);
+        root = new AvlNode<T>(inData);
     } else {
         insertionHelper(inData, root);
     }
@@ -247,7 +247,7 @@ void AvlRankTree<T>::insert(std::shared_ptr<T> inData) {
 }
 
 template<class T>
-void AvlRankTree<T>::destructorPostOrder(Node<T> *root) {
+void AvlRankTree<T>::destructorPostOrder(AvlNode<T> *root) {
     if (root == nullptr) return;
     if (root->left != nullptr) destructorPostOrder(root->left);
     if (root->right != nullptr) destructorPostOrder(root->right);
@@ -264,7 +264,7 @@ void AvlRankTree<T>::remove(const T &data) {
 
 
 template<class T>
-void AvlRankTree<T>::removeHelper(const T &outData, Node<T> *&current) {
+void AvlRankTree<T>::removeHelper(const T &outData, AvlNode<T> *&current) {
     if (current == nullptr) {
         throw std::invalid_argument("The data to be removed does not exist");
     }
@@ -276,7 +276,7 @@ void AvlRankTree<T>::removeHelper(const T &outData, Node<T> *&current) {
     } else {
         //at most one son
         if (current->right == nullptr || current->left == nullptr) {
-            Node<T> *temp = current;
+            AvlNode<T> *temp = current;
 
             if (current->right == nullptr) {
                 current = current->left;
@@ -289,7 +289,7 @@ void AvlRankTree<T>::removeHelper(const T &outData, Node<T> *&current) {
             //two sons
 
             //finding the node to replace the deleted node with and swapping only the data.
-            Node<T> *replaceNode = findMin(current->right);
+            AvlNode<T> *replaceNode = findMin(current->right);
             std::shared_ptr<T> tempData = current->data;
             current->data = replaceNode->data;
             replaceNode->data = tempData;
@@ -308,7 +308,7 @@ void AvlRankTree<T>::removeHelper(const T &outData, Node<T> *&current) {
 
 
 template<class T>
-Node<T> *AvlRankTree<T>::findMin(Node<T> *current) {
+AvlNode<T> *AvlRankTree<T>::findMin(AvlNode<T> *current) {
     if (current == nullptr) return nullptr;
     while (current != nullptr && current->left != nullptr) {
         current = current->left;
@@ -318,7 +318,7 @@ Node<T> *AvlRankTree<T>::findMin(Node<T> *current) {
 
 
 template<class T>
-std::shared_ptr<T> AvlRankTree<T>::findHelper(const T &data, Node<T> *&current) {
+std::shared_ptr<T> AvlRankTree<T>::findHelper(const T &data, AvlNode<T> *&current) {
     if (current == nullptr) return nullptr;
 
     if (*(current->data) > data) {
@@ -336,7 +336,7 @@ std::shared_ptr<T> AvlRankTree<T>::findRank(int i) {
         return nullptr;
     }
 
-    Node<T> *current = root;
+    AvlNode<T> *current = root;
 
     while (current != nullptr) {
         int sizeLeft = 1;

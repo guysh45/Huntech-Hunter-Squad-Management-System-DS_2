@@ -2,7 +2,7 @@
 
 #include "wet2util.h"
 
-class hunter {
+class Hunter {
 
     int hunterId;
     int fightsHad;
@@ -12,7 +12,7 @@ class hunter {
 
 public:
 
-    hunter(int hunterId, const NenAbility &nenAbility, int aura, int fightsHad, int joinedGroupFights){
+    Hunter(int hunterId, const NenAbility &nenAbility, int aura, int fightsHad, int joinedGroupFights){
         if (hunterId <= 0 || aura <= 0 || fightsHad < 0 || joinedGroupFights < 0 || nenAbility.isValid() == false) {
             throw std::invalid_argument("invalid parameters");
         }
@@ -23,11 +23,11 @@ public:
         this->aura = aura;
         this->Nen = nenAbility;
     };
-    ~hunter() = default;
-    hunter(const hunter&) = delete;
-    hunter& operator=(const hunter&) = delete;
-    hunter(hunter &&) = delete;
-    hunter &operator=(hunter &&) = delete;
+    ~Hunter() = default;
+    Hunter(const Hunter&) = delete;
+    Hunter& operator=(const Hunter&) = delete;
+    Hunter(Hunter &&) = delete;
+    Hunter &operator=(Hunter &&) = delete;
 
     int getHunterId() const {return this->hunterId;};
     int getFightsHad() const {return this->fightsHad;};

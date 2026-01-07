@@ -10,5 +10,8 @@ add_executable(DS_2
         Huntech26a2.h
         Hunter.h
         AvlRankTree.h
-        Node.h
+        AvlNode.h
+        UnionNode.h
+        Union.h
+        UnionSquad.h
 )
