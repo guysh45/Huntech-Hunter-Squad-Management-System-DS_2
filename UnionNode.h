@@ -6,21 +6,20 @@
 #include "UnionSquad.h"
 
 class UnionNode {
+    static const int INITAIL_FIGHTS = 0;
 
+    int relFights = INITAIL_FIGHTS;
     UnionNode *parent = nullptr;
-
     Hunter hunter;
-    AvlNode<UnionSquad>* squad = nullptr;
+    std::shared_ptr<UnionSquad> squad = nullptr;
+
+
 
     friend class Union;
 
 public:
 
-    UnionNode(int hunterId, const NenAbility &nenAbility, int aura, int fightsHad, int joinedGroupFights, int squadId) :
-
-            hunter(hunterId, nenAbility, aura, fightsHad, joinedGroupFights)
-
-    {};
+    explicit UnionNode(const Hunter& hunter) :hunter(hunter){};
 
     ~UnionNode() = default;
     UnionNode(const UnionNode&) = delete;

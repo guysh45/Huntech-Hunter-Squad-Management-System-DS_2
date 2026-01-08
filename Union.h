@@ -1,5 +1,7 @@
 #pragma once
 
+#include "wet2util.h"
+
 #include "UnionNode.h"
 #include "UnionSquad.h"
 #include "AvlRankTree.h"
@@ -19,6 +21,48 @@ public:
     Union& operator=(const Union&) = delete;
     Union(Union &&) = delete;
     Union &operator=(Union &&) = delete;
+
+    //Getterrrrs/fetures/accuirerrs /Bomboclat
+    /**
+     *
+     * @param hunterId the id of the Hunter to look for.
+     * @return if found - its SquadId.
+     *          if not found - -1.
+     */
+    int findSquadOfHunter(const int hunterId);
+
+    /**
+     *
+     * @param groupId The Id of the Squad to query.
+     * @return if found - its NenAbillity.
+     *          if not found - -1.
+     */
+    NenAbility getSquadNenabillity(const int groupId);
+
+    /**
+     *
+     * @param groupId The Id of the Squad to query.
+     * @return if found - its Size.
+     *          if not found - -1.
+     */
+    int getSquadSize(const int groupId);
+
+    /**
+     *
+     * @param groupId The Id of the Squad to query.
+     * @return if found - the squad Aura.
+     *          if not found - -1.
+     */
+    int getSquadAura(const int groupId);
+
+    /**
+     *
+     * @param groupId The Id of the Squad to query.
+     * @return if found - the squad Exp.
+     *          if not found - -1.
+     */
+    int getSquadExp(const int groupId);
+
 
 
     /**
@@ -45,6 +89,22 @@ public:
      * @return true if successful, false otherwise
      */
     bool removeSquad(const int id);
+
+
+    /**
+     *@brief inserts a new Hunter to a squad.
+     *
+     * @param groupId the id of the squad to insert to.
+     * @param hunterId the id of the new Hunter.
+     * @param nenAbility the nenAbility of the new Hunter.
+     * @param aura the Aura of the new Hunter.
+     * @param fightsHad the fights the new Hunter has.
+     * @return if successful true.
+     *         if not false. (already exists).
+     */
+    bool insertHunterToGroup(const int groupId, const int hunterId, const NenAbility& nenAbility, const int aura, const int fightsHad);
+
+
 
 
 

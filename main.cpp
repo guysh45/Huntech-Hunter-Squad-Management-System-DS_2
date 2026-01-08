@@ -51,5 +51,53 @@ int main() {
             cout << "idm?: " << U.findSquad(i)->squadId << endl;
         }
     }
+
+    cout << "======================================================="<< endl;
+
+    U.insertSquad(11);
+    U.insertSquad(12);
+
+    U.insertHunterToGroup(11,212742779,NenAbility("Enhancer"),10,1);
+    U.insertHunterToGroup(11,212081194,NenAbility("Manipulator"),50,70);
+    U.insertHunterToGroup(11,2054582156,NenAbility("Transmuter"),2,1);
+
+
+    U.insertHunterToGroup(12,4564964516,NenAbility("Conjurer"),2,1);
+
+
+    if(U.findSquadOfHunter(212742779) == U.findSquadOfHunter(212081194) && U.findSquadOfHunter(212742779) == U.findSquadOfHunter(2054582156)) {
+        cout << "Same group test  :: SUCCSESS" << endl;
+    } else {
+        cout << "Same group test  :: FAIL" << endl;
+    }
+
+    if(U.findSquadOfHunter(212742779) == U.findSquadOfHunter(4564964516)) {
+        cout << "DIFF group test  :: FAIL" << endl;
+    } else {
+        cout << "DIFF group test  :: SUCCSESS" << endl;
+    }
+    cout << "======================================================="<< endl;
+    cout << "Group 11 : " << endl;
+    cout << "Squad Size :: "<< U.getSquadSize(11) << " || (Should be 3) " << endl;
+    cout << "Squad Exp :: "<< U.getSquadExp(11) << " || (Should be 0) " << endl;
+    cout << "Squad Aura :: "<< U.getSquadAura(11) << " || (Should be 62) " << endl;
+    cout << "Squad Nenabillity :: "<< U.getSquadNenabillity(11) << " || (Should be .....) " << endl;
+    cout << "Menmbers : " << endl;
+    cout << U.findSquadOfHunter(212742779) << " || (Should be 11) " << endl;
+    cout << U.findSquadOfHunter(212081194) << " || (Should be 11) " << endl;
+    cout << U.findSquadOfHunter(2054582156) << " || (Should be 11) " << endl;
+    cout << "=========================" << endl;
+    cout << "Group 12 : " << endl;
+    cout << "Squad Size :: "<< U.getSquadSize(12) << " || (Should be 1) " << endl;
+    cout << "Squad Exp :: "<< U.getSquadExp(12) << " || (Should be 0) " << endl;
+    cout << "Squad Aura :: "<< U.getSquadAura(12) << " || (Should be 2) " << endl;
+    cout << "Squad Nenabillity :: "<< U.getSquadNenabillity(12) << " || (Should be one Conjurer) " << endl;
+    cout << "Menmbers : " << endl;
+    cout << U.findSquadOfHunter(4564964516) << " || (Should be 12) " << endl;
+    cout << "======================================================="<< endl;
+    cout << "Non existsing hunter : " << endl;
+
+    cout << U.findSquadOfHunter(4) << " || (Should be -1) " << endl;
+
     return 0;
 }

@@ -8,14 +8,17 @@ class UnionNode;
 
 class UnionSquad {
     static const int INITIAL_SIZE = 0;
+    static const int INITIAL_AURA = 0;
     static const int INITIAL_EXP = 0;
 
 public:
     int squadId;
     int size = INITIAL_SIZE;
     int squadExp = INITIAL_EXP;
+    int squadAura = INITIAL_AURA;
     UnionNode* groupRoot = nullptr;
     NenAbility squadNen;
+
 
     friend class Union;
 

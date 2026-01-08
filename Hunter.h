@@ -24,8 +24,8 @@ public:
         this->Nen = nenAbility;
     };
     ~Hunter() = default;
-    Hunter(const Hunter&) = delete;
-    Hunter& operator=(const Hunter&) = delete;
+    Hunter(const Hunter&) = default;
+    Hunter& operator=(const Hunter&) = default;
     Hunter(Hunter &&) = delete;
     Hunter &operator=(Hunter &&) = delete;
 

@@ -5,15 +5,20 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(DS_2
 #        main26a2.cpp
+        main.cpp
+
         wet2util.h
-        Huntech26a2.cpp
+
         Huntech26a2.h
+        Huntech26a2.cpp
         Hunter.h
+
         AvlRankTree.h
         AvlNode.h
-        UnionNode.h
+
         Union.h
-        UnionSquad.h
         Union.cpp
-        main.cpp
+        UnionNode.h
+        UnionSquad.h
+
 )
