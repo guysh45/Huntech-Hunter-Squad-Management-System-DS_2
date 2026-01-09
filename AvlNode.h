@@ -7,7 +7,7 @@ template<class T>
 class AvlRankTree;
 
 template<class T>
-class Node {
+class AvlNode {
     static const int BASE_HEIGHT = 0;
     static const int BASE_BF = 0;
     static const int BASE_BFM1 = -1;
@@ -15,8 +15,8 @@ class Node {
     static const int CHILDRENS0 = 0;
 
 
-    Node *left;
-    Node *right;
+    AvlNode *left;
+    AvlNode *right;
 
     int height;
     int balanceFactor;
@@ -27,19 +27,19 @@ class Node {
     friend class AvlRankTree<T>;
 
 public:
-    Node() = delete;
+    AvlNode() = delete;
 
     /**
      *
      * @param inData - a shared_ptr to the data the Node will hold.
      */
-    explicit Node(std::shared_ptr<T> inData): left(nullptr), right(nullptr), height(BASE_HEIGHT),
+    explicit AvlNode(std::shared_ptr<T> inData): left(nullptr), right(nullptr), height(BASE_HEIGHT),
                                               balanceFactor(BASE_BF),childrenCount(CHILDRENS1), data(std::move(inData)) {
     }
 
-    ~Node() = default;
-    Node(const Node&) = delete;
-    Node& operator=(const Node&) = delete;
+    ~AvlNode() = default;
+    AvlNode(const AvlNode&) = delete;
+    AvlNode& operator=(const AvlNode&) = delete;
 
 
 
