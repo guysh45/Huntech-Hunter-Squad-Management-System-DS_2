@@ -7,11 +7,9 @@
 int Union::findSquadOfHunter(const int hunterId) {
 	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
 	if ( temp == nullptr) return -1; //hunter doesnt exists.
-	UnionNode* current = temp->get();
-	while (current->parent != nullptr) {
-		current = current->parent;
-	}
-	return current->squad->squadId;
+
+	UnionNode* root = compress(temp->get());
+	return root->squad->squadId;
 }
 
 
@@ -43,12 +41,14 @@ int Union::getHunterFights(const int hunterId) {
 	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
 	if ( temp == nullptr) return -1; //hunter doesnt exists.
 	UnionNode* current = temp->get();
+	UnionNode* root = compress(current);
 
 	int fights = current->hunter.getFightsHad() - current->hunter.getJoinedGroupFights();
-	while (current != nullptr) {
-		fights += current->relFights;
-		current = current->parent;
+	fights += current->relFights;
+	if (current != root) {
+		fights += root->relFights;
 	}
+
 	return fights;
 }
 
@@ -57,11 +57,11 @@ NenAbility Union::getHunterPartialNen(const int hunterId) {
 	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
 	if ( temp == nullptr) return NenAbility::invalid(); //hunter doesnt exists.
 	UnionNode* current = temp->get();
+	UnionNode* root = compress(current);
 
-	NenAbility nen = current->hunter.getNenAbility();
-	while (current != nullptr) {
-		nen += current->relNen;
-		current = current->parent;
+	NenAbility nen = current->hunter.getNenAbility() + current->relNen;
+	if (current != root) {
+		nen += root->relNen;
 	}
 	return nen;
 }
@@ -124,21 +124,56 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
 }
 
 
-bool Union::unite(const int groupToId, const int groupfromId) {
+bool Union::unite(const int groupToId, const int groupFromId) {
+	if(groupFromId == groupToId) return true;
 	std::shared_ptr<UnionSquad> squadToPtr = groups.find(UnionSquad(groupToId));
-	std::shared_ptr<UnionSquad> squadFromPtr = groups.find(UnionSquad(groupfromId));
+	std::shared_ptr<UnionSquad> squadFromPtr = groups.find(UnionSquad(groupFromId));
 	if (squadToPtr == nullptr || squadFromPtr == nullptr) return false; //no such group.
 
 	UnionNode *toRoot = squadToPtr->groupRoot;
 	UnionNode *fromRoot = squadFromPtr->groupRoot;
 
+
+	//From is empty. just remove it from the tree.
+	if(squadFromPtr->groupRoot == nullptr) {
+		try {
+			groups.remove(*squadFromPtr);
+		} catch (const std::invalid_argument &) {
+			return false;
+			//we should never get here. we checked it's in the tree already.
+		}
+		return true;
+	}
+
+	//To is empty.
+	if(squadToPtr->groupRoot == nullptr) {
+		squadToPtr->groupRoot = squadFromPtr->groupRoot;
+		squadToPtr->groupRoot->squad = squadToPtr;
+
+		squadToPtr->size = squadFromPtr->size;
+		squadToPtr->squadAura = squadFromPtr->squadAura;
+		squadToPtr->squadExp = squadFromPtr->squadExp;
+		squadToPtr->squadNen = squadFromPtr->squadNen;
+
+		try {
+			groups.remove(*squadFromPtr);
+		} catch (const std::invalid_argument &) {
+			return false;
+			//we should never get here. we checked it's in the tree already.
+		}
+		return true;
+	}
+
+
+
+	//To>=From
 	if (squadToPtr->size >= squadFromPtr->size) {
 		fromRoot->parent = toRoot;
 		fromRoot->squad = nullptr;
 
 		fromRoot->relFights -= toRoot->relFights;
 		fromRoot->relNen += squadToPtr->squadNen - toRoot->relNen;
-	} else {
+	} else { //To<From
 		toRoot->parent = fromRoot;
 		fromRoot->squad = squadToPtr;
 		squadToPtr->groupRoot = fromRoot;
@@ -163,4 +198,26 @@ bool Union::unite(const int groupToId, const int groupfromId) {
 	}
 
 	return true;
+}
+
+
+
+UnionNode* Union::compress(UnionNode* node) {
+	if(node == nullptr) {
+		return nullptr; //safety check.
+	}
+
+	if(node->parent == nullptr) {
+		return node; //this is the root.
+	}
+
+	UnionNode* root = compress(node->parent);
+
+	if(node->parent != root) {
+		node->relFights += node->parent->relFights;
+		node->relNen += node->parent->relNen;
+		node->parent = root;
+	}
+
+	return root;
 }

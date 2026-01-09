@@ -11,7 +11,6 @@ class UnionSquad {
     static const int INITIAL_AURA = 0;
     static const int INITIAL_EXP = 0;
 
-public:
     int squadId;
     int size = INITIAL_SIZE;
     int squadExp = INITIAL_EXP;

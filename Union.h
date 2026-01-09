@@ -13,6 +13,14 @@ class Union {
 	AvlRankTree<UnionSquad> groups;
 	Hash<std::shared_ptr<UnionNode>> huntersHash;
 
+
+	/**
+	 * @brief Recursive function to compress paths from the given node. keeps relNen and relFights correct.
+	 * @param node -  the node to start on.
+	 * @return the root of the Node.
+	 */
+	UnionNode* compress(UnionNode* node);
+
 public:
 	Union() = default;
 
@@ -124,5 +132,12 @@ public:
 	                         const int fightsHad);
 
 
-	bool unite(const int groupToId, const int groupfromId);
+	/**
+	 * @brief unites the groups by Id.
+	 * @param groupToId - the group id which to unite to.
+	 * @param groupFromId - the group id of the group to unite to the other.
+	 * @return if seccsefful - true.
+	 *			if one is not find - false.
+	 */
+	bool unite(const int groupToId, const int groupFromId);
 };
