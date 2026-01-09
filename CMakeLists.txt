@@ -21,5 +21,6 @@ add_executable(DS_2
         UnionNode.h
         UnionSquad.h
         RankAuraSquad.h
+        UnionNode.cpp
 
 )

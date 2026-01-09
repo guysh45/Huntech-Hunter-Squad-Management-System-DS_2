@@ -20,6 +20,9 @@
 
 
 class Huntech {
+    static const int VICTORY_EXP = 3;
+    static const int TIE_EXP = 1;
+
 private:
     AvlRankTree<AuraSquad> auraTree;
     Union squads;

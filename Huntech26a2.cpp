@@ -95,6 +95,42 @@ StatusType Huntech::add_hunter(int hunterId,
 }
 
 output_t<int> Huntech::squad_duel(int squadId1, int squadId2) {
+
+    if (squadId1 <= 0 || squadId2 <= 0 || squadId1 == squadId2) return StatusType::INVALID_INPUT;
+
+    std::shared_ptr<UnionSquad> squad1 = squads.findSquad(squadId1);
+    std::shared_ptr<UnionSquad> squad2 = squads.findSquad(squadId2);
+    if (squad1 == nullptr || squad2 == nullptr) return StatusType::FAILURE;
+    if (!squad1->getSize() || !squad2->getSize()) return StatusType::FAILURE;
+
+    int effectiveAura1 = squad1->getAura() + squad1->getExp();
+    int effectiveAura2 = squad2->getAura() + squad2->getExp();
+    squad1->addFight();
+    squad2->addFight();
+
+
+    if (effectiveAura1 > effectiveAura2) {
+        squad1->addExp(VICTORY_EXP);
+        return 1;
+    }
+    if (effectiveAura2 > effectiveAura1) {
+        squad2->addExp(VICTORY_EXP);
+        return 3;
+    }
+
+    NenAbility Nen1 = squad1->getSquadNen();
+    NenAbility Nen2 = squad2->getSquadNen();
+
+    if (Nen1 > Nen2) {
+        squad1->addExp(VICTORY_EXP);
+        return 2;
+    }
+    if (Nen2 > Nen1) {
+        squad2->addExp(VICTORY_EXP);
+        return 4;
+    }
+    squad1->addExp(TIE_EXP);
+    squad2->addExp(TIE_EXP);
     return 0;
 }
 

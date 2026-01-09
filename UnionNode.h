@@ -28,4 +28,8 @@ public:
     UnionNode& operator=(const UnionNode&) = delete;
     UnionNode(UnionNode &&) = delete;
     UnionNode &operator=(UnionNode &&) = delete;
+
+    void addFight() {
+        relFights++;
+    }
 };
