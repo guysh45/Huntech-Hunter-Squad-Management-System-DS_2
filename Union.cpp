@@ -39,6 +39,33 @@ int Union::getSquadExp(const int groupId) {
     return  squadPtr->squadExp;
 }
 
+int Union::getHunterFights(const int hunterId) {
+    UnionNode** temp = huntersHash.find(hunterId);
+    if(temp == nullptr) return -1;
+    UnionNode* current = *temp;
+
+    int fights = current->hunter.getFightsHad() - current->hunter.getJoinedGroupFights();
+    while(current != nullptr) {
+        fights += current->relFights;
+        current = current->parent;
+    }
+    return fights;
+}
+
+
+NenAbility Union::getHunterPartialNen(const int hunterId) {
+    UnionNode** temp = huntersHash.find(hunterId);
+    if(temp == nullptr) throw std::invalid_argument("no such Hunter"); //what should we do?
+    UnionNode* current = *temp;
+
+    NenAbility nen = current->hunter.getNenAbility();
+    while(current != nullptr) {
+        nen += current->relNen;
+        current = current->parent;
+    }
+    return nen;
+}
+
 
 
 
@@ -54,18 +81,16 @@ bool Union::insertSquad(const int id) {
     return true;
 }
 
-
+//we dont delete the UnionSquad. just remove it from the tree to keep the data right for the hunter.
 bool Union::removeSquad(const int id) {
     std::shared_ptr<UnionSquad> temp = groups.find(UnionSquad(id));
     if (temp == nullptr) return false;
-    if (temp->groupRoot != nullptr) {
-        temp->groupRoot->squad = nullptr; //cuts the group from the tree
-    }
 
     try {
         groups.remove(*temp);
     }catch (const std::invalid_argument&) {
         return false;
+        //we should never get here. we checked it's in the tree already.
     }
     return true;
 }
@@ -91,10 +116,12 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
         newNode->parent = squadPtr->groupRoot;
     }
 
+    newNode->relNen = squadPtr->squadNen;
+
     huntersHash.insert(hunterId,newNode);
     squadPtr->size ++;
-    squadPtr->squadNen += newHunter.getNenAbility();
     squadPtr->squadAura += newHunter.getAura();
+    squadPtr->squadNen += newHunter.getNenAbility();
     return true;
 }
 

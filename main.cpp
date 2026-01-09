@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
 
-    Union U;
+     Union U;
 
     for (int i = 1; i <= 10; i++) {
         if (U.findSquad(i) == nullptr) {
@@ -57,12 +57,12 @@ int main() {
     U.insertSquad(11);
     U.insertSquad(12);
 
-    U.insertHunterToGroup(11,212742779,NenAbility("Enhancer"),10,1);
+    U.insertHunterToGroup(11,212742779,NenAbility("Enhancer"),10,2);
     U.insertHunterToGroup(11,212081194,NenAbility("Manipulator"),50,70);
     U.insertHunterToGroup(11,2054582156,NenAbility("Transmuter"),2,1);
 
 
-    U.insertHunterToGroup(12,4564964516,NenAbility("Conjurer"),2,1);
+    U.insertHunterToGroup(12,4564964516,NenAbility("Conjurer"),2,12);
 
 
     if(U.findSquadOfHunter(212742779) == U.findSquadOfHunter(212081194) && U.findSquadOfHunter(212742779) == U.findSquadOfHunter(2054582156)) {
@@ -83,9 +83,9 @@ int main() {
     cout << "Squad Aura :: "<< U.getSquadAura(11) << " || (Should be 62) " << endl;
     cout << "Squad Nenabillity :: "<< U.getSquadNenabillity(11) << " || (Should be .....) " << endl;
     cout << "Menmbers : " << endl;
-    cout << U.findSquadOfHunter(212742779) << " || (Should be 11) " << endl;
-    cout << U.findSquadOfHunter(212081194) << " || (Should be 11) " << endl;
-    cout << U.findSquadOfHunter(2054582156) << " || (Should be 11) " << endl;
+    cout << "Hunter of id: 212742779 is in group ||" << U.findSquadOfHunter(212742779) << "|| And has been in ||" << U.getHunterFights(212742779) << "|| Fights || (Should be 11 and 2) " << endl;
+    cout << "Hunter of id: 212081194 is in group ||" << U.findSquadOfHunter(212081194) << "|| And has been in ||" << U.getHunterFights(212081194) << "|| Fights || (Should be 11 and 70) " << endl;
+    cout << "Hunter of id: 2054582156 is in group ||" << U.findSquadOfHunter(2054582156) << "|| And has been in ||" << U.getHunterFights(2054582156) << "|| Fights || (Should be 11 and 1) " << endl;
     cout << "=========================" << endl;
     cout << "Group 12 : " << endl;
     cout << "Squad Size :: "<< U.getSquadSize(12) << " || (Should be 1) " << endl;
@@ -93,11 +93,15 @@ int main() {
     cout << "Squad Aura :: "<< U.getSquadAura(12) << " || (Should be 2) " << endl;
     cout << "Squad Nenabillity :: "<< U.getSquadNenabillity(12) << " || (Should be one Conjurer) " << endl;
     cout << "Menmbers : " << endl;
-    cout << U.findSquadOfHunter(4564964516) << " || (Should be 12) " << endl;
+    cout << "Hunter of id: 4564964516 is in group ||" << U.findSquadOfHunter(4564964516) << "|| And has been in ||" << U.getHunterFights(4564964516) << "|| Fights || (Should be 12 and 12) " << endl;
     cout << "======================================================="<< endl;
     cout << "Non existsing hunter : " << endl;
 
     cout << U.findSquadOfHunter(4) << " || (Should be -1) " << endl;
+
+
+    
+
 
     return 0;
 }

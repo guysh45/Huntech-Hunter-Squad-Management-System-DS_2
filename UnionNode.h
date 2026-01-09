@@ -9,6 +9,8 @@ class UnionNode {
     static const int INITAIL_FIGHTS = 0;
 
     int relFights = INITAIL_FIGHTS;
+    NenAbility relNen; //default constructor 0.
+
     UnionNode *parent = nullptr;
     Hunter hunter;
     std::shared_ptr<UnionSquad> squad = nullptr;
