@@ -9,20 +9,20 @@ using namespace std;
 
 int main() {
 
-	AvlRankTree<AuraSuad> tree;
+	AvlRankTree<AuraSquad> tree;
 
-	tree.insert(std::make_shared<AuraSuad>(1, 10));
-	tree.insert(std::make_shared<AuraSuad>(2, 12));
-	tree.insert(std::make_shared<AuraSuad>(3, 7));
-	tree.insert(std::make_shared<AuraSuad>(4, 2));
-	tree.insert(std::make_shared<AuraSuad>(5, 999));
-	tree.insert(std::make_shared<AuraSuad>(6, 999));
+	tree.insert(std::make_shared<AuraSquad>(1, 10));
+	tree.insert(std::make_shared<AuraSquad>(2, 12));
+	tree.insert(std::make_shared<AuraSquad>(3, 7));
+	tree.insert(std::make_shared<AuraSquad>(4, 2));
+	tree.insert(std::make_shared<AuraSquad>(5, 999));
+	tree.insert(std::make_shared<AuraSquad>(6, 999));
 
 	for (int i = 1; i < 6; i++) {
 		cout << "rank: " << i << "    ||    id: " << tree.findRank(i)->getSquadId() << endl;
 	}
 
-	tree.insert(std::make_shared<AuraSuad>(90, 998));
+	tree.insert(std::make_shared<AuraSquad>(90, 998));
 
 	cout << "================================================" << endl;
 

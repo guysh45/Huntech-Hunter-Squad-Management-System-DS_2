@@ -1,19 +1,22 @@
 #pragma once
 
-struct AuraSuad {
+struct AuraSquad {
 private:
+    static const int INITIAL_AURA = 0;
+
     int squadId;
     int squadAura;
 
 public:
-    AuraSuad(int squadId, int squadAura) : squadId(squadId), squadAura(squadAura) {};
-    ~AuraSuad() = default;
-    AuraSuad(const AuraSuad&) = delete;
-    AuraSuad& operator=(const AuraSuad&) = delete;
-    AuraSuad(AuraSuad &&) = delete;
-    AuraSuad &operator=(AuraSuad &&) = delete;
+    AuraSquad(int squadId, int squadAura) : squadId(squadId), squadAura(squadAura) {};
+    explicit AuraSquad(int squadId) : squadId(squadId), squadAura(INITIAL_AURA) {};
+    ~AuraSquad() = default;
+    AuraSquad(const AuraSquad&) = delete;
+    AuraSquad& operator=(const AuraSquad&) = delete;
+    AuraSquad(AuraSquad &&) = delete;
+    AuraSquad &operator=(AuraSquad &&) = delete;
 
-    bool operator>(const AuraSuad& other) const {
+    bool operator>(const AuraSquad& other) const {
         if (squadAura > other.squadAura) {
             return true;
         }

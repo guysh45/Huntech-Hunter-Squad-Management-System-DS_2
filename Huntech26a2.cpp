@@ -2,13 +2,32 @@
 // However, you need to implement all public Huntech functions, which are provided below as a template.
 
 #include "Huntech26a2.h"
+#include <stdexcept>
 
-Huntech::Huntech() {}
+Huntech::Huntech() {
+    //defualt
+}
 
-Huntech::~Huntech() {}
+Huntech::~Huntech() {
+    //default
+}
 
 StatusType Huntech::add_squad(int squadId) {
-    return StatusType::FAILURE;
+    if (squadId <= 0) return StatusType::INVALID_INPUT;
+    try {
+        if (!squads.insertSquad(squadId)) return StatusType::FAILURE;
+    }catch (std::bad_alloc) {
+        return StatusType::ALLOCATION_ERROR;
+    }
+
+    try {
+        auraTree.insert(std::make_shared<AuraSquad>(squadId));
+    }catch (std::bad_alloc) {
+        squads.removeSquad(squadId); //remove will not throw since we inserted it before.
+        return StatusType::ALLOCATION_ERROR;
+    }
+
+    return StatusType::SUCCESS;
 }
 
 StatusType Huntech::remove_squad(int squadId) {
