@@ -38,4 +38,5 @@ public:
 
     bool operator>(const UnionSquad &other) const {return squadId > other.squadId;}
 
+    int getAura() const {return squadAura;}
 };

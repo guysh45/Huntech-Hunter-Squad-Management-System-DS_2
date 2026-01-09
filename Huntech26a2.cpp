@@ -16,13 +16,13 @@ StatusType Huntech::add_squad(int squadId) {
     if (squadId <= 0) return StatusType::INVALID_INPUT;
     try {
         if (!squads.insertSquad(squadId)) return StatusType::FAILURE;
-    }catch (std::bad_alloc) {
+    }catch (const std::bad_alloc&) {
         return StatusType::ALLOCATION_ERROR;
     }
 
     try {
         auraTree.insert(std::make_shared<AuraSquad>(squadId));
-    }catch (std::bad_alloc) {
+    }catch (const std::bad_alloc&) {
         squads.removeSquad(squadId); //remove will not throw since we inserted it before.
         return StatusType::ALLOCATION_ERROR;
     }
@@ -31,7 +31,18 @@ StatusType Huntech::add_squad(int squadId) {
 }
 
 StatusType Huntech::remove_squad(int squadId) {
-    return StatusType::FAILURE;
+    if (squadId <= 0) return StatusType::INVALID_INPUT;
+
+    std::shared_ptr<UnionSquad> temp = squads.findSquad(squadId);
+    if (temp == nullptr) return StatusType::FAILURE;
+
+    try {
+        auraTree.remove(AuraSquad(squadId, temp->getAura()));
+        squads.removeSquad(squadId);
+    }catch (const std::invalid_argument&) {
+        return StatusType::FAILURE; //we shouldn't get here, since we found it already.
+    }
+    return StatusType::SUCCESS;
 }
 
 StatusType Huntech::add_hunter(int hunterId,
