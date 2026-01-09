@@ -51,7 +51,47 @@ StatusType Huntech::add_hunter(int hunterId,
                                int aura,
                                int fightsHad)
 {
-    return StatusType::FAILURE;
+    if (hunterId <= 0 || squadId <= 0 || !nenType.isValid() || aura < 0 || fightsHad < 0) return StatusType::INVALID_INPUT;
+
+    std::shared_ptr<UnionSquad> squad = squads.findSquad(squadId);
+    if (squad == nullptr) return StatusType::FAILURE;
+
+    bool needRankUpdate = (aura > 0);
+    int oldAura = squad->getAura();
+
+
+    if (needRankUpdate) {
+        try {
+            auraTree.insert(std::make_shared<AuraSquad>(squadId, oldAura + aura));
+        }catch (const std::bad_alloc&) {
+            return StatusType::ALLOCATION_ERROR;
+        }
+    }
+
+    try {
+        bool inserted = squads.insertHunterToGroup(squadId, hunterId, nenType, aura, fightsHad);
+
+        if (!inserted) {
+            if (needRankUpdate) {
+                auraTree.remove(AuraSquad(squadId, oldAura + aura));
+            }
+            return StatusType::FAILURE;
+        }
+    } catch (const std::bad_alloc &) {
+        if (needRankUpdate) {
+            auraTree.remove(AuraSquad(squadId, oldAura + aura));
+        }
+        return StatusType::ALLOCATION_ERROR;
+    }
+
+    if (needRankUpdate) {
+        try {
+            auraTree.remove(AuraSquad(squadId, oldAura));  //exists because we found it before, shouldnt throw.
+        }catch (const std::invalid_argument&) {
+            return StatusType::FAILURE;
+        }
+    }
+    return StatusType::SUCCESS;
 }
 
 output_t<int> Huntech::squad_duel(int squadId1, int squadId2) {
