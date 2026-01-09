@@ -11,7 +11,7 @@
 
 class Union {
 	AvlRankTree<UnionSquad> groups;
-	Hash<UnionNode *> huntersHash;
+	Hash<std::shared_ptr<UnionNode>> huntersHash;
 
 public:
 	Union() = default;

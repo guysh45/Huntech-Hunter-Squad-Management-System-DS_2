@@ -5,8 +5,9 @@
 
 ///////////Getters///////////////////
 int Union::findSquadOfHunter(const int hunterId) {
-	if (huntersHash.find(hunterId) == nullptr) return -1; //hunter doesnt exists.
-	UnionNode *current = *huntersHash.find(hunterId);
+	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
+	if ( temp == nullptr) return -1; //hunter doesnt exists.
+	UnionNode* current = temp->get();
 	while (current->parent != nullptr) {
 		current = current->parent;
 	}
@@ -39,9 +40,9 @@ int Union::getSquadExp(const int groupId) {
 }
 
 int Union::getHunterFights(const int hunterId) {
-	UnionNode **temp = huntersHash.find(hunterId);
-	if (temp == nullptr) return -1;
-	UnionNode *current = *temp;
+	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
+	if ( temp == nullptr) return -1; //hunter doesnt exists.
+	UnionNode* current = temp->get();
 
 	int fights = current->hunter.getFightsHad() - current->hunter.getJoinedGroupFights();
 	while (current != nullptr) {
@@ -53,9 +54,9 @@ int Union::getHunterFights(const int hunterId) {
 
 
 NenAbility Union::getHunterPartialNen(const int hunterId) {
-	UnionNode **temp = huntersHash.find(hunterId);
-	if (temp == nullptr) return  NenAbility::invalid();
-	UnionNode *current = *temp;
+	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
+	if ( temp == nullptr) return NenAbility::invalid(); //hunter doesnt exists.
+	UnionNode* current = temp->get();
 
 	NenAbility nen = current->hunter.getNenAbility();
 	while (current != nullptr) {
@@ -104,10 +105,10 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
 	//sets rel fight according to root or not.
 
 	Hunter newHunter(hunterId, nenAbility, aura, fightsHad, squadRootRelFights);
-	UnionNode *newNode = new UnionNode(newHunter);
+	std::shared_ptr<UnionNode> newNode = std::make_shared<UnionNode>(newHunter);
 
 	if (squadPtr->groupRoot == nullptr) {
-		squadPtr->groupRoot = newNode;
+		squadPtr->groupRoot = newNode.get();
 		newNode->squad = squadPtr;
 	} else {
 		newNode->parent = squadPtr->groupRoot;
