@@ -100,7 +100,6 @@ int main() {
     cout << U.findSquadOfHunter(4) << " || (Should be -1) " << endl;
 
 
-    
 
 
     return 0;

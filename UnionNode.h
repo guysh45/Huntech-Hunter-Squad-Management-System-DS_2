@@ -6,9 +6,9 @@
 #include "UnionSquad.h"
 
 class UnionNode {
-    static const int INITAIL_FIGHTS = 0;
+    static const int INITIAL_FIGHTS = 0;
 
-    int relFights = INITAIL_FIGHTS;
+    int relFights = INITIAL_FIGHTS;
     NenAbility relNen; //default constructor 0.
 
     UnionNode *parent = nullptr;

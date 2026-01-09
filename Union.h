@@ -78,7 +78,7 @@ public:
 	 * @brief Gets the sum of NenAbility of everyone who joined before the hunter to the group.
 	 * @param hunterId The Id of the Hunter to query.
 	* @return if found - the requested NenAbility.
-	 *          if not found - throws invalid argument.
+	 *          if not found - NenAbility::invalid().
 	 */
 	NenAbility getHunterPartialNen(const int hunterId);
 
@@ -122,4 +122,7 @@ public:
 	 */
 	bool insertHunterToGroup(const int groupId, const int hunterId, const NenAbility &nenAbility, const int aura,
 	                         const int fightsHad);
+
+
+	bool unite(const int groupToId, const int groupfromId);
 };
