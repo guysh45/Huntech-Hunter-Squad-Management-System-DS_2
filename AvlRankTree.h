@@ -139,6 +139,11 @@ public:
     * @return If found shared_ptr to the requested data. else nullptr.
     */
     std::shared_ptr<T> findRank(int i);
+
+    /**
+     * @return the amount of objects the tree currently holds
+     */
+    int getSize() const {return elementsCounter;}
 };
 
 

@@ -151,7 +151,10 @@ output_t<int> Huntech::get_squad_experience(int squadId) {
 }
 
 output_t<int> Huntech::get_ith_collective_aura_squad(int i) {
-    return 0;
+        int groupAmount = auraTree.getSize();
+        if (groupAmount == 0 || i > groupAmount || i < 1 ) return StatusType::FAILURE;
+
+        return auraTree.findRank(i)->getSquadId();
 }
 
 output_t<NenAbility> Huntech::get_partial_nen_ability(int hunterId) {
