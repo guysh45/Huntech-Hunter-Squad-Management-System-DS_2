@@ -37,7 +37,7 @@ class Hash {
     static const int initialSize = 8;
     static const int growingFactor = 2;
     static const int initialCount = 0;
-    static constexpr double maxLoadFactor = 0.75;
+    static constexpr double maxLoadFactor = 1;
 
 
     int size = initialSize;
