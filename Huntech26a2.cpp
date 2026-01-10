@@ -135,11 +135,19 @@ output_t<int> Huntech::squad_duel(int squadId1, int squadId2) {
 }
 
 output_t<int> Huntech::get_hunter_fights_number(int hunterId) {
-    return 0;
+    if (hunterId <= 0) return StatusType::INVALID_INPUT;
+
+    int fights = squads.getHunterFights(hunterId);
+    if (fights == -1) return StatusType::FAILURE;
+    return fights;
 }
 
 output_t<int> Huntech::get_squad_experience(int squadId) {
-    return 0;
+    if (squadId <= 0) return StatusType::INVALID_INPUT;
+
+    int exp = squads.getSquadExp(squadId);
+    if (exp == -1) return StatusType::FAILURE;
+    return exp;
 }
 
 output_t<int> Huntech::get_ith_collective_aura_squad(int i) {
