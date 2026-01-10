@@ -59,6 +59,8 @@ NenAbility Union::getHunterPartialNen(const int hunterId) {
 	UnionNode* current = temp->get();
 	UnionNode* root = compress(current);
 
+	if (root->squad == nullptr) return NenAbility::invalid();
+
 	NenAbility nen = current->hunter.getNenAbility() + current->relNen;
 	if (current != root) {
 		nen += root->relNen;

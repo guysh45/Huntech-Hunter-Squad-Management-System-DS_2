@@ -86,7 +86,7 @@ public:
 	 * @brief Gets the sum of NenAbility of everyone who joined before the hunter to the group.
 	 * @param hunterId The Id of the Hunter to query.
 	* @return if found - the requested NenAbility.
-	 *          if not found - NenAbility::invalid().
+	 *          if not found / dead - NenAbility::invalid().
 	 */
 	NenAbility getHunterPartialNen(const int hunterId);
 
