@@ -49,13 +49,6 @@ class Hash {
     }
 
     /**
-     *
-     * @param src source Hash table. the Hash array before the expansion.
-     * @param srcSize the size of the source Hash table. the Hash array size before the expansion.
-     */
-    void reHash(HashNode<T> *src, int srcSize);
-
-    /**
      * Expands the array by the growingFactor and rehash the items to the new table.
      */
     void expandArray();
@@ -92,37 +85,28 @@ public:
 
 
 template<class T>
-void Hash<T>::reHash(HashNode<T> *src, int srcSize) {
-    itemCount = 0;
-    for (int i = 0; i < srcSize; i++) {
-        HashNode<T> *currentNode = src[i].next;
-        while (currentNode != nullptr) {
-            insert(currentNode->id, currentNode->data);
-            currentNode = currentNode->next;
-        }
-    }
-}
-
-
-template<class T>
 void Hash<T>::expandArray() {
-    HashNode<T> *newArray = new HashNode<T> [size * growingFactor]; // if throws wants to keep going up.
     int prevSize = size;
-    size = size * growingFactor;
-    HashNode<T> *temp = array;
-    array = newArray;
+     int newSize = size * growingFactor;
+    HashNode<T> *newArray = new HashNode<T> [newSize];
+    size = newSize;
 
-    reHash(temp, prevSize);
+    for(int i = 0; i < prevSize; i++) {
+        HashNode<T> *curr = array[i].next;
 
-    for (int i = 0; i < prevSize; i++) {
-        HashNode<T> *currentNode = temp[i].next;
-        while (currentNode != nullptr) {
-            HashNode<T> *toDelete = currentNode;
-            currentNode = currentNode->next;
-            delete toDelete;
+        while (curr != nullptr) {
+            HashNode<T> *nextInOldChain = curr->next;
+            int newIndex = hashFunction(curr->id);
+
+            curr->next = newArray[newIndex].next;
+            newArray[newIndex].next = curr;
+
+            curr = nextInOldChain;
         }
     }
-    delete[] temp;
+
+    delete[] array;
+    array = newArray;
 }
 
 

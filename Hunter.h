@@ -13,7 +13,7 @@ class Hunter {
 public:
 
     Hunter(int hunterId, const NenAbility &nenAbility, int aura, int fightsHad, int joinedGroupFights){
-        if (hunterId <= 0 || aura <= 0 || fightsHad < 0 || joinedGroupFights < 0 || nenAbility.isValid() == false) {
+        if (hunterId <= 0 || aura < 0 || fightsHad < 0 || joinedGroupFights < 0 || nenAbility.isValid() == false) {
             throw std::invalid_argument("invalid parameters");
         }
 
