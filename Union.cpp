@@ -14,7 +14,7 @@ int Union::findSquadOfHunter(const int hunterId) {
 
 
 NenAbility Union::getSquadNenabillity(const int groupId) {
-	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
+	const std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
 	if (squadPtr == nullptr) return NenAbility();
 	return squadPtr->squadNen;
 }
@@ -102,7 +102,7 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
 	if (huntersHash.find(hunterId) != nullptr) return false; //hunter already exists.
 
 
-	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
+	const std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
 	if (squadPtr == nullptr) return false; //no such group.
 
 	int squadRootRelFights = squadPtr->groupRoot == nullptr ? 0 : squadPtr->groupRoot->relFights;
@@ -131,8 +131,8 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
 
 bool Union::unite(const int groupToId, const int groupFromId) {
 	if(groupFromId == groupToId) return true;
-	std::shared_ptr<UnionSquad> squadToPtr = groups.find(UnionSquad(groupToId));
-	std::shared_ptr<UnionSquad> squadFromPtr = groups.find(UnionSquad(groupFromId));
+	const std::shared_ptr<UnionSquad> squadToPtr = groups.find(UnionSquad(groupToId));
+	const std::shared_ptr<UnionSquad> squadFromPtr = groups.find(UnionSquad(groupFromId));
 	if (squadToPtr == nullptr || squadFromPtr == nullptr) return false; //no such group.
 
 	UnionNode *toRoot = squadToPtr->groupRoot;
