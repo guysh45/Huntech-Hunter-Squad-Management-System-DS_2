@@ -12,14 +12,20 @@
 
 #ifndef HUNTECH26A2_H_
 #define HUNTECH26A2_H_
+#include "AvlRankTree.h"
+#include "RankAuraSquad.h"
+#include "Union.h"
 #include "wet2util.h"
 
 
+
 class Huntech {
+    static const int VICTORY_EXP = 3;
+    static const int TIE_EXP = 1;
+
 private:
-    //
-    // Here you may add anything you need to implement your Huntech class
-    //
+    AvlRankTree<AuraSquad> auraTree;
+    Union squads;
 
 public:
     // <DO-NOT-MODIFY> {

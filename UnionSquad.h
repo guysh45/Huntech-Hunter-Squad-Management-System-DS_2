@@ -1,8 +1,8 @@
 #pragma once
 
-#include "UnionNode.h"
 #include "wet2util.h"
 #include "stdexcept"
+#include "UnionNode.h"
 
 class UnionNode;
 
@@ -38,4 +38,11 @@ public:
 
     bool operator>(const UnionSquad &other) const {return squadId > other.squadId;}
 
+    int getAura() const {return squadAura;}
+    int getSize() const {return size;}
+    int getExp() const {return squadExp;}
+    const NenAbility& getSquadNen() const {return squadNen;}
+
+    void addFight();
+    void addExp(int exp) {squadExp += exp;}
 };

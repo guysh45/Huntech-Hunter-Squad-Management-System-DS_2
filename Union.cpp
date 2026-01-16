@@ -59,6 +59,9 @@ NenAbility Union::getHunterPartialNen(const int hunterId) {
 	UnionNode* current = temp->get();
 	UnionNode* root = compress(current);
 
+
+	if (root->squad->groupRoot == nullptr) return NenAbility::invalid();
+
 	NenAbility nen = current->hunter.getNenAbility() + current->relNen;
 	if (current != root) {
 		nen += root->relNen;
@@ -89,6 +92,7 @@ bool Union::removeSquad(const int id) {
 		return false;
 		//we should never get here. we checked it's in the tree already.
 	}
+	temp->groupRoot = nullptr; //cut the root access from the squad (this way we know if a group is dead)
 	return true;
 }
 
@@ -110,11 +114,12 @@ bool Union::insertHunterToGroup(const int groupId, const int hunterId, const Nen
 	if (squadPtr->groupRoot == nullptr) {
 		squadPtr->groupRoot = newNode.get();
 		newNode->squad = squadPtr;
+		newNode->relNen = squadPtr->squadNen ;
 	} else {
 		newNode->parent = squadPtr->groupRoot;
+		newNode->relNen = squadPtr->squadNen - newNode->parent->relNen;
 	}
 
-	newNode->relNen = squadPtr->squadNen;
 
 	huntersHash.insert(hunterId, newNode);
 	squadPtr->size++;
@@ -178,6 +183,7 @@ bool Union::unite(const int groupToId, const int groupFromId) {
 		fromRoot->squad = squadToPtr;
 		squadToPtr->groupRoot = fromRoot;
 		toRoot->squad = nullptr;
+		squadFromPtr->groupRoot = nullptr;
 
 		toRoot->relFights -= fromRoot->relFights;
 

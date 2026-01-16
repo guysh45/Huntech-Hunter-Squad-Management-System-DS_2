@@ -21,11 +21,17 @@ class UnionNode {
 
 public:
 
-    explicit UnionNode(const Hunter& hunter) :hunter(hunter){};
+    explicit UnionNode(const Hunter& hunter) :hunter(hunter) {
+        relNen = NenAbility::zero();
+    };
 
     ~UnionNode() = default;
     UnionNode(const UnionNode&) = delete;
     UnionNode& operator=(const UnionNode&) = delete;
     UnionNode(UnionNode &&) = delete;
     UnionNode &operator=(UnionNode &&) = delete;
+
+    void addFight() {
+        relFights++;
+    }
 };
