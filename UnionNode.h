@@ -20,7 +20,7 @@ class UnionNode {
 
 public:
 
-    explicit UnionNode(const Hunter& hunter) : hunter(hunter), relNen(NenAbility::zero()) {};
+    explicit UnionNode(const Hunter& hunter) : relNen(NenAbility::zero()), hunter(hunter) {};
 
     ~UnionNode() = default;
     UnionNode(const UnionNode&) = delete;
