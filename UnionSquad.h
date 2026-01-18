@@ -1,8 +1,10 @@
 #pragma once
 
+#include <stdexcept>
+
 #include "wet2util.h"
-#include "stdexcept"
-#include "UnionNode.h"
+
+
 
 class UnionNode;
 
@@ -16,7 +18,7 @@ class UnionSquad {
     int squadExp = INITIAL_EXP;
     int squadAura = INITIAL_AURA;
     UnionNode* groupRoot = nullptr;
-    NenAbility squadNen;
+    NenAbility squadNen = NenAbility::zero();
 
 
     friend class Union;
@@ -43,6 +45,14 @@ public:
     int getExp() const {return squadExp;}
     const NenAbility& getSquadNen() const {return squadNen;}
 
+    /**
+     * @brief Adds a fight to all the members currently in the group.
+     */
     void addFight();
+
+    /**
+     *
+     * @param exp The exp to add to the group. can be negative.
+     */
     void addExp(int exp) {squadExp += exp;}
 };

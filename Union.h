@@ -1,23 +1,28 @@
 #pragma once
 
-#include "wet2util.h"
+#include <memory>
 
+#include "wet2util.h"
 #include "UnionNode.h"
 #include "UnionSquad.h"
 #include "AvlRankTree.h"
 #include "Hash.h"
-#include "memory"
 
 
+/**
+ * A Union class specifically for managing Hunters in Squads.
+ * Using invert trees.
+ * Using Path-Compression and Union by size.
+ */
 class Union {
 	AvlRankTree<UnionSquad> groups;
 	Hash<std::shared_ptr<UnionNode>> huntersHash;
 
 
 	/**
-	 * @brief Recursive function to compress paths from the given node. keeps relNen and relFights correct.
-	 * @param node -  the node to start on.
-	 * @return the root of the Node.
+	 * @brief Recursive function to compress paths from the given node. Keeps relNen and relFights correct.
+	 * @param node -  The node to start at.
+	 * @return The root of the Node.
 	 */
 	UnionNode* compress(UnionNode* node);
 
@@ -34,53 +39,24 @@ public:
 
 	Union &operator=(Union &&) = delete;
 
-	/**
-	 *
-	 * @param hunterId the id of the Hunter to look for.
-	 * @return if found - its SquadId.
-	 *          if not found - -1.
-	 */
-	int findSquadOfHunter(const int hunterId);
 
 	/**
-	 *
-	 * @param groupId The Id of the Squad to query.
-	 * @return if found - its NenAbillity.
-	 *          if not found - -1.
-	 */
-	NenAbility getSquadNenabillity(const int groupId);
-
-	/**
-	 *
-	 * @param groupId The Id of the Squad to query.
-	 * @return if found - its Size.
-	 *          if not found - -1.
-	 */
-	int getSquadSize(const int groupId);
-
-	/**
-	 *
-	 * @param groupId The Id of the Squad to query.
-	 * @return if found - the squad Aura.
-	 *          if not found - -1.
-	 */
-	int getSquadAura(const int groupId);
-
-	/**
+	 *@brief Returns the Exp of the Squad.
 	 *
 	 * @param groupId The Id of the Squad to query.
 	 * @return if found - the squad Exp.
 	 *          if not found - -1.
 	 */
-	int getSquadExp(const int groupId);
+	int getSquadExp(const int groupId) ;
 
 	/**
 	 *@brief Gets the number of fights the hunter had.
+	 *
 	 * @param hunterId The Id of the Hunter to query.
 	* @return if found - the Hunter fights.
 	 *          if not found - -1.
 	 */
-	int getHunterFights(const int hunterId);
+	int getHunterFights(const int hunterId) ;
 
 	/**
 	 * @brief Gets the sum of NenAbility of everyone who joined before the hunter to the group.
@@ -88,7 +64,7 @@ public:
 	* @return if found - the requested NenAbility.
 	 *          if not found / dead - NenAbility::invalid().
 	 */
-	NenAbility getHunterPartialNen(const int hunterId);
+	NenAbility getHunterPartialNen(const int hunterId) ;
 
 
 	/**

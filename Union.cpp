@@ -1,36 +1,11 @@
+#include <memory>
+#include <stdexcept>
+
 #include "Union.h"
-#include "memory"
-#include "stdexcept"
+
 
 
 ///////////Getters///////////////////
-int Union::findSquadOfHunter(const int hunterId) {
-	std::shared_ptr<UnionNode>* temp = huntersHash.find(hunterId);
-	if ( temp == nullptr) return -1; //hunter doesnt exists.
-
-	UnionNode* root = compress(temp->get());
-	return root->squad->squadId;
-}
-
-
-NenAbility Union::getSquadNenabillity(const int groupId) {
-	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
-	if (squadPtr == nullptr) return NenAbility();
-	return squadPtr->squadNen;
-}
-
-int Union::getSquadSize(const int groupId) {
-	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
-	if (squadPtr == nullptr) return -1;
-	return squadPtr->size;
-}
-
-int Union::getSquadAura(const int groupId) {
-	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
-	if (squadPtr == nullptr) return -1;
-	return squadPtr->squadAura;
-}
-
 int Union::getSquadExp(const int groupId) {
 	std::shared_ptr<UnionSquad> squadPtr = groups.find(UnionSquad(groupId));
 	if (squadPtr == nullptr) return -1;

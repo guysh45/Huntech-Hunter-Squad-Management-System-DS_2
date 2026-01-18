@@ -2,6 +2,7 @@
 
 #include "wet2util.h"
 
+
 class Hunter {
 
     int hunterId;
@@ -23,6 +24,7 @@ public:
         this->aura = aura;
         this->Nen = nenAbility;
     };
+
     ~Hunter() = default;
     Hunter(const Hunter&) = default;
     Hunter& operator=(const Hunter&) = default;

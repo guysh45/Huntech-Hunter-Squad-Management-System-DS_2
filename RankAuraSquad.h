@@ -27,7 +27,7 @@ public:
         return false;
     }
 
-    int getSquadId() {
+    int getSquadId() const {
         return squadId;
     }
 
