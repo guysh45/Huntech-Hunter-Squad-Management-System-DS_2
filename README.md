@@ -1,6 +1,7 @@
 # Huntech: Hunter Squad Management System
 
 This repository contains a robust, custom-built data structures project developed in C++17. Created for the Technion's Data Structures course (234218) of Winter 2026. this system simulates an association tracking "Hunters" and their squads. It manages complex attributes like Nen abilities, Aura levels, and battle experience while strictly avoiding standard library (STL) containers.
+For in depth explantion about the implementation, see Dry.pdf 
 
 ## Core Data Structures
 
